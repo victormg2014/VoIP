@@ -1,0 +1,14 @@
+ip address add address=210.34.4.1/30 interface=ether1
+ipv6 address add address=2002:cafe:fe0:4::1/64 interface=ether1
+ip address add address=210.34.3.1/24 interface=ether2
+ipv6 address add address=2002:cafe:fe0:3::1/64 interface=ether2
+ip address add address=210.34.4.5/30 interface=ether3
+ipv6 address add address=2002:cafe:fe0:5::1/64 interface=ether3
+routing ospf instance add name=default
+routing ospf network add network=210.34.4.0/30 area=backbone
+routing ospf network add network=210.34.3.0/24 area=backbone
+routing ospf network add network=210.34.4.4/30 area=backbone
+/routing ospf-v3 interface
+ add interface=ether1 area=backbone
+ add interface=ether2 area=backbone
+ add interface=ether3 area=backbone
