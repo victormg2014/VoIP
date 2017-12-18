@@ -1,15 +1,23 @@
-# dec/04/2017 08:25:52 by RouterOS 6.34.6
+# dec/18/2017 07:42:55 by RouterOS 6.34.6
 # software id = TWIQ-YM3K
 #
 /interface ethernet
-set [ find default-name=ether1 ] advertise=10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full \
-    mac-address=52:54:00:12:34:56 speed=100Mbps
+set [ find default-name=ether1 ] advertise=\
+    10M-half,10M-full,100M-half,100M-full,1000M-half,1000M-full mac-address=\
+    52:54:00:12:34:56 speed=100Mbps
+/routing ospf-v3 area
+add area-id=1.1.1.1 name=area1
+add area-id=3.3.3.3 name=area3
 /tool user-manager customer
-set admin access=own-routers,own-users,own-profiles,own-limits,config-payment-gw
+set admin access=\
+    own-routers,own-users,own-profiles,own-limits,config-payment-gw
 /ip address
 add address=210.34.4.1/30 interface=ether1 network=210.34.4.0
 add address=210.34.3.1/24 interface=ether2 network=210.34.3.0
 add address=210.34.4.5/30 interface=ether3 network=210.34.4.4
+/ip dhcp-relay
+add dhcp-server=210.34.2.2 disabled=no interface=ether2 local-address=\
+    210.34.3.1 name=Pool2
 /ipv6 address
 add address=2002:cafe:fe0:4::1 interface=ether1
 add address=2002:cafe:fe0:3::1 interface=ether2
